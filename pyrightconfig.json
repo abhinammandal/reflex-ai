@@ -1,0 +1,11 @@
+{
+  "pythonVersion": "3.14",
+  "typeCheckingMode": "basic",
+  "extraPaths": [
+    "services/reflex-core/src"
+  ],
+  "include": [
+    "services/reflex-core/src",
+    "services/reflex-core/tests"
+  ]
+}
