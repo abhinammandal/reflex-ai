@@ -22,4 +22,3 @@ async def health_check() -> HealthResponse:
         service="reflex-core",
         version="0.1.0",
     )
-
