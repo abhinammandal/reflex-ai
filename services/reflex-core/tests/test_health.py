@@ -2,7 +2,6 @@ from fastapi.testclient import TestClient
 
 from reflex_core.main import app
 
-
 client = TestClient(app)
 
 
