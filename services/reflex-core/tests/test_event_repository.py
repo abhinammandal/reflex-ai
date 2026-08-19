@@ -41,10 +41,10 @@ def test_saves_and_loads_activity_event() -> None:
     with Session(test_engine) as session:
         repository = ActivityEventRepository(session)
 
-        saved_event = repository.save(event)
+        was_stored = repository.save(event)
         loaded_event = repository.get(event.event_id)
 
-    assert saved_event == event
+    assert was_stored is True
     assert loaded_event == event
 
 
@@ -56,9 +56,11 @@ def test_does_not_store_duplicate_event() -> None:
     with Session(test_engine) as session:
         repository = ActivityEventRepository(session)
 
-        repository.save(event)
-        repository.save(event)
+        first_save = repository.save(event)
+        second_save = repository.save(event)
 
         records = session.exec(select(ActivityEventRecord)).all()
 
+    assert first_save is True
+    assert second_save is False
     assert len(records) == 1
