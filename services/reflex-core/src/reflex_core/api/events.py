@@ -5,6 +5,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends
 from sqlmodel import Session
 
+from reflex_core.api.security import require_api_token
 from reflex_core.application.event_ingestion import (
     ActivityEventIngestionService,
     IngestionResult,
@@ -18,7 +19,11 @@ router = APIRouter(prefix="/api/v1", tags=["events"])
 DatabaseSession = Annotated[Session, Depends(get_session)]
 
 
-@router.post("/events", response_model=IngestionResult)
+@router.post(
+    "/events",
+    response_model=IngestionResult,
+    dependencies=[Depends(require_api_token)],
+)
 def ingest_activity_event(
     event: ActivityEvent,
     session: DatabaseSession,
